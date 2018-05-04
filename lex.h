@@ -5,3 +5,4 @@
 #define PRINT 5
 #define END 6
 #define IDENTIFIER 7
+#define NUMBER 8
