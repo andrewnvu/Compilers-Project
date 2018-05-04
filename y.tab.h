@@ -47,7 +47,7 @@ extern int yydebug;
   {
     start = 258,
     pname = 259,
-    id = 260,
+    identifier = 260,
     letter = 261,
     digit = 262,
     type = 263,
@@ -67,7 +67,7 @@ extern int yydebug;
 /* Tokens.  */
 #define start 258
 #define pname 259
-#define id 260
+#define identifier 260
 #define letter 261
 #define digit 262
 #define type 263
@@ -88,8 +88,8 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 7 "yacc.y" /* yacc.c:1909  */
-int num, char id;
+#line 8 "yacc.y" /* yacc.c:1909  */
+int num; char id;
 
 #line 95 "y.tab.h" /* yacc.c:1909  */
 };

@@ -13,7 +13,6 @@ extern yylval;
 "PROGRAM"		{return PROGRAM;}
 "VAR"			{return VAR;}
 "INTEGER"		{return INTEGER;}
-"BEGIN"			{return BEGIN;}
 "PRINT"			{return PRINT;}
 "END."			{return END;}
 [a-zA-Z][_a-zA-Z0-9]* 	{yylval.id = yytext[0]; return IDENTIFIER;}

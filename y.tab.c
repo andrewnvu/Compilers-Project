@@ -66,9 +66,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 void yyerror(char * s);
 
-#line 72 "y.tab.c" /* yacc.c:339  */
+#line 73 "y.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -105,7 +106,7 @@ extern int yydebug;
   {
     start = 258,
     pname = 259,
-    id = 260,
+    identifier = 260,
     letter = 261,
     digit = 262,
     type = 263,
@@ -125,7 +126,7 @@ extern int yydebug;
 /* Tokens.  */
 #define start 258
 #define pname 259
-#define id 260
+#define identifier 260
 #define letter 261
 #define digit 262
 #define type 263
@@ -146,10 +147,10 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 7 "yacc.y" /* yacc.c:355  */
-int num, char id;
+#line 8 "yacc.y" /* yacc.c:355  */
+int num; char id;
 
-#line 153 "y.tab.c" /* yacc.c:355  */
+#line 154 "y.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -166,7 +167,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 170 "y.tab.c" /* yacc.c:358  */
+#line 171 "y.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -465,7 +466,7 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    27,    27
+       0,    28,    28
 };
 #endif
 
@@ -474,7 +475,7 @@ static const yytype_uint8 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "start", "pname", "id", "letter",
+  "$end", "error", "$undefined", "start", "pname", "identifier", "letter",
   "digit", "type", "dec_list", "dec", "stat", "stat_list", "print",
   "output", "assign", "expr", "term", "factor", "number", "$accept",
   "statement", YY_NULLPTR
@@ -1234,7 +1235,7 @@ yyreduce:
   switch (yyn)
     {
       
-#line 1238 "y.tab.c" /* yacc.c:1646  */
+#line 1239 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1462,7 +1463,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 28 "yacc.y" /* yacc.c:1906  */
+#line 29 "yacc.y" /* yacc.c:1906  */
 
 
 void yyerror(char *s) 

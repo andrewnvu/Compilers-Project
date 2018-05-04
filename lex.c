@@ -6,7 +6,7 @@ extern int yylex();
 extern int yylineno;
 extern char* yytext;
 
-char *names[] = {NULL,"PROGRAM","VAR","INTEGER","BEGIN", "PRINT", "END", "IDENTIFIER" };
+char *names[] = {NULL,"PROGRAM","VAR","INTEGER", "PRINT", "END", "IDENTIFIER" };
 
 int main(void)
 {
@@ -25,7 +25,6 @@ int main(void)
 		}
 		case VAR:
 		case INTEGER:
-		case BEGIN:
 		case PRINT:
 		case END:
 		case IDENTIFIER:
