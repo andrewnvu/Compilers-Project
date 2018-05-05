@@ -9,12 +9,13 @@ extern yylval;
 %%
 
 
-"PROGRAM"		{return PROGRAM;}
-"VAR"			{return VAR;}
-"INTEGER"		{return INTEGER;}
-"PRINT"			{return PRINT;}
-"END."			{return END;}
-[a-zA-Z][_a-zA-Z0-9]* 	{yylval.id = yytext[0]; return identifier;}
+"PROGRAM"		return PROGRAM;
+"VAR"			return VAR;
+"BEGIN"			return BEGIN;
+"INTEGER"		return INTEGER;
+"PRINT"			return PRINT;
+"END."			return END;
+[a-zA-Z][_a-zA-Z0-9]* 	{yylval.id = yytext[0]; return id;}
 [0-9]+			{yylval.num = atoi(yytext); return number;}
 [-+=\;\*/()\',:]	{return yytext[0];}
 \(\*[^\*\)]*\*\)	/*ignore comments*/;
