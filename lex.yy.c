@@ -491,10 +491,9 @@ char *yytext;
 #line 1 "lex.l"
 #line 2 "lex.l"
 #include <stdio.h>
-#include "lex.h"
 #include "y.tab.h"
 //would include YACC HEADER FILE HERE
-#line 498 "lex.yy.c"
+#line 497 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -712,11 +711,11 @@ YY_DECL
 		}
 
 	{
-#line 10 "lex.l"
+#line 9 "lex.l"
 
 
 
-#line 720 "lex.yy.c"
+#line 719 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -775,67 +774,67 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 13 "lex.l"
+#line 12 "lex.l"
 {return PROGRAM;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 14 "lex.l"
+#line 13 "lex.l"
 {return VAR;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 15 "lex.l"
+#line 14 "lex.l"
 {return INTEGER;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 16 "lex.l"
+#line 15 "lex.l"
 {return PRINT;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 17 "lex.l"
+#line 16 "lex.l"
 {return END;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 18 "lex.l"
-{yylval.id = yytext[0]; return IDENTIFIER;}
+#line 17 "lex.l"
+{yylval.id = yytext[0]; return identifier;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 19 "lex.l"
-{yylval.num = atoi(yytext); return NUMBER;}
+#line 18 "lex.l"
+{yylval.num = atoi(yytext); return number;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 20 "lex.l"
+#line 19 "lex.l"
 {return yytext[0];}
 	YY_BREAK
 case 9:
 /* rule 9 can match eol */
 YY_RULE_SETUP
-#line 21 "lex.l"
+#line 20 "lex.l"
 /*ignore comments*/;
 	YY_BREAK
 case 10:
 /* rule 10 can match eol */
 YY_RULE_SETUP
-#line 22 "lex.l"
+#line 21 "lex.l"
 ;
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 23 "lex.l"
+#line 22 "lex.l"
 {printf("unexepected character");}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 25 "lex.l"
+#line 24 "lex.l"
 ECHO;
 	YY_BREAK
-#line 839 "lex.yy.c"
+#line 838 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1836,7 +1835,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 25 "lex.l"
+#line 24 "lex.l"
 
 
 

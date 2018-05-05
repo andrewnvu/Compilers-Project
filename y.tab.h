@@ -45,53 +45,43 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    start = 258,
-    pname = 259,
-    identifier = 260,
-    letter = 261,
-    digit = 262,
-    type = 263,
-    dec_list = 264,
-    dec = 265,
-    stat = 266,
-    stat_list = 267,
-    print = 268,
-    output = 269,
-    assign = 270,
-    expr = 271,
-    term = 272,
-    factor = 273,
-    number = 274
+    PROGRAM = 258,
+    VAR = 259,
+    END = 260,
+    INTEGER = 261,
+    PRINT = 262,
+    pname = 263,
+    identifier = 264,
+    number = 265,
+    dec_list = 266,
+    stat_list = 267
   };
 #endif
 /* Tokens.  */
-#define start 258
-#define pname 259
-#define identifier 260
-#define letter 261
-#define digit 262
-#define type 263
-#define dec_list 264
-#define dec 265
-#define stat 266
+#define PROGRAM 258
+#define VAR 259
+#define END 260
+#define INTEGER 261
+#define PRINT 262
+#define pname 263
+#define identifier 264
+#define number 265
+#define dec_list 266
 #define stat_list 267
-#define print 268
-#define output 269
-#define assign 270
-#define expr 271
-#define term 272
-#define factor 273
-#define number 274
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 
 union YYSTYPE
 {
-#line 8 "yacc.y" /* yacc.c:1909  */
-int num; char id;
+#line 10 "yacc.y" /* yacc.c:1909  */
 
-#line 95 "y.tab.h" /* yacc.c:1909  */
+		int num; 
+		char id; 
+		//enum Types tval;
+	
+
+#line 85 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

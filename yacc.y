@@ -1,42 +1,56 @@
 %{
+void yyerror (char *s);
+int yylex();
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-void yyerror(char * s);
 %}
 
-%union {int num; char id;}
+
+%union {
+		int num; 
+		char id; 
+		//enum Types tval;
+	}
 %start start
 %token PROGRAM
 %token VAR
-%token BEGIN
-%token END
-%token <num>INTEGER
-%token PRINT
-%type letter
-%type pname
-%type <id> identifier
-%type dec_list
-%type dec
-%type stat_list
-%type stat
-%type output
-%type assign
-%type expr
-%type term
-%type factor
-%type <num>number
-%type type
-%type <num>digit
-%%
-start: start pname ';' {;};
-%%
 
-void yyerror(char *s) 
-{fprintf(stderr, "%\n", s);}
+%token END
+%token <num> INTEGER
+%token PRINT
+/*
+%type <id> letter
+*/
+%token <id> pname
+%token <id> identifier
+%token <num> number
+%token dec_list
+%token stat_list
+/*
+%type <tval> dec
+
+%type <tval> stat
+%type <id>output
+%type <id>assign
+%type <id>expr
+%type <id>term
+%type <num>factor
+%type <tval>type
+%type <num>digit
+*/
+%%
+start	: PROGRAM pname ';' 		{;}
+	| VAR dec_list ';' 		{;}
+	;
+%%
 
 int main(void)
-{ 
-  return 0;
+{
+
+	return 0;
 }
+
+void yyerror (char *s) {fprintf (stderr, "%s\n", s);}
+
 

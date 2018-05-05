@@ -1,4 +1,3 @@
-#include "lex.h"
 #include <stdio.h>
 #include <stdlib.h>
 
