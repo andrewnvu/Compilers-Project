@@ -15,12 +15,13 @@ extern yylval;
 "INTEGER"		return INTEGER;
 "PRINT"			return PRINT;
 "END."			return END;
-[a-zA-Z][_a-zA-Z0-9]* 	{yylval.id = yytext[0]; return id;}
-[0-9]+			{yylval.num = atoi(yytext); return number;}
-[-+=\;\*/()\',:]	{return yytext[0];}
+[a-zA-Z][_a-zA-Z0-9]* 	{ECHO; return ID;}
+[0-9]+			{yylval=atoi(yytext);return number;}
+[-+=\;\*/()\',:]	return yytext[0];
 \(\*[^\*\)]*\*\)	/*ignore comments*/;
 [ \t\n]			;
-.			{printf("unexepected character");}
+.			{return (int) yytext[0];
+			printf("unexepected character");}
 
 %%
 
