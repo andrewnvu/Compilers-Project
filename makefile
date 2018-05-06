@@ -1,11 +1,12 @@
-lex: lex.yy.c y.tab.c
-	gcc -g lex.yy.c y.tab.c -o lex
+scanner: lex.yy.c y.tab.h y.tab.c
+	gcc lex.yy.c y.tab.c -o lex
 
-lex.yy.c: y.tab.c lex.l
-	lex lex.l
-
-y.tab.c: yacc.y
+yacc: yacc.y
 	yacc -d yacc.y
 
+lex.yy.c: lex.l
+	lex lex.l
+
+
 clean: 
-	rm -rf lex.yy.c y.tab.c y.tab.h lex 
+	rm  lex.yy.c y.tab.c y.tab.h lex 

@@ -8,63 +8,67 @@ void yyerror (char *s);
 
 %union {
 		int num; 
-		char id; 
-		//enum Types tval;
+		char * id; 
+		char * strings; 
 	}
 %start start
+
+
 %token PROGRAM
-%token BEGIN
+%token BEGINING
 %token VAR
 %token END
-%token <num> INTEGER
+%token INTEGER
 %token PRINT
-%type <id> print //not sure if the <tag> is correct
-%type <id> letter
-%type <id> pname
-%token <id> ID
-%type <num> number
-%type <int> dec_list
-%type <int> stat_list
-%token <int> dec
-%type <int> stat
-%token <id> output
-%type <id> assign
-%type <id> expr
-%type <id> term
+
+%token <num> INT
+%token <id> IDENTIFIER
+%type <num> number 
+%type <num> expr
+%type <num> term
 %type <num> factor
-%type <id> type
-%type <num> digit
+%type <id> assign
+%token <strings> STRING;
 
 %%
-start		: PROGRAM pname			{;}
-		| VAR dec_list 			{;}
-		;
-		/*| BEGIN stat_list END		{;}
-		;*/
-
-pname		: id {;}
+start		: PROGRAM pname variable {;}
 		;
 
-id		: letter 
-		| letter ',' digit
-		; /*needs to be resursive*/
+variable 	: VAR dec_list begin {;}
+		;
 
-dec_list	: dec {;}
-		| type {;}
+begin		: BEGINING stat_list end {;}
+		;
+
+end		: END {exit(EXIT_SUCCESS);}
+		;
+
+pname		: IDENTIFIER {;}
+		;
+
+dec_list	: dec ':' type {;}
+		;
+
+dec		: IDENTIFIER ',' dec
+		| IDENTIFIER
 		;
 
 stat_list	: stat {;}
-		| stat  stat_list {;}
+		| stat ';' stat_list {;}
 		;
 
 stat		: print	{;}
 		| assign {;}
 		;
 
-print		: PRINT output{printf(output);}
+print		: PRINT output{;}
 		;
 
-assign		: id "=" expr {;}
+output		: IDENTIFIER
+		| STRING ',' IDENTIFIER {printf(" ");}		
+		;
+
+assign		: IDENTIFIER "=" expr {;}
 		;
 
 expr		: term {;}
@@ -77,46 +81,23 @@ term		: term "*" factor {;}
 		| factor {;}
 		;
 
-factor		: id {;}
+factor		: IDENTIFIER {;}
 		| number {;}
-		| "(" expr ")" {;}
+		| '(' expr ')' {/*needs code*/;}
 		;
 
 
-number		: digit
-		| digit	{;}
-		; /*needs to be resursive*/
+number		: INT {;};
 
-type		: INTEGER {;}
+type		: INTEGER
 		;
 
-digit		: "0" {;}
-		| "1" {;}
-		| "2" {;}
-		| "3" {;}
-		| "4" {;}
-		| "5" {;}
-		| "6" {;}
-		| "7" {;}
-		| "8" {;}
-		| "9" {;};
-
-letter		: "a" {;}
-		| "b" {;}
-		| "c" {;}
-		| "d" {;}
-		| "e" {;}
-		| "f" {;}; 
-
-
- 
 %%
 
 int main(void)
 {
- 	yyparse();
   
-	return 0;
+	return (yyparse());
 }
 
 void yyerror (char *s) {fprintf(stderr, "%s\n", s);}

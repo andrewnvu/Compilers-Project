@@ -1,27 +1,31 @@
 %{
 #include <stdio.h>
+#include "string.h"
 #include "y.tab.h"
-//would include YACC HEADER FILE HERE
 %}
 
-extern yylval;
+extern int yylineno = 1;
 
 %%
 
 
-"PROGRAM"		return PROGRAM;
-"VAR"			return VAR;
-"BEGIN"			return BEGIN;
-"INTEGER"		return INTEGER;
-"PRINT"			return PRINT;
-"END."			return END;
-[a-zA-Z][_a-zA-Z0-9]* 	{ECHO; return ID;}
-[0-9]+			{yylval=atoi(yytext);return number;}
-[-+=\;\*/()\',:]	return yytext[0];
+"PROGRAM"		{return PROGRAM;}
+"VAR"			{return VAR;}
+"BEGIN"			{return BEGINING;}
+"INTEGER"		{return INTEGER;}
+"PRINT"			{return PRINT;}
+"END."			{return END;}
+[a-zA-Z][_a-zA-Z0-9]* 	{return IDENTIFIER;}
+
+[1-9][0-9]*		{return INT;}
+
+[-+=\;\*/()\',:]	{return yytext[0];}
+
 \(\*[^\*\)]*\*\)	/*ignore comments*/;
-[ \t\n]			;
-.			{return (int) yytext[0];
-			printf("unexepected character");}
+
+[ \t\n]			{yylineno++;}
+
+.			{printf("unexepected character");}
 
 %%
 
