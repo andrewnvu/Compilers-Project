@@ -17,8 +17,7 @@ extern int yylineno = 1;
 "END."			{return END;}
 [a-zA-Z][_a-zA-Z0-9]* 	{return IDENTIFIER;}
 
-[1-9][0-9]*		{return INT;}
-
+[0-9]	{return yytext[0];}
 [-+=\;\*/()\',:]	{return yytext[0];}
 
 \(\*[^\*\)]*\*\)	/*ignore comments*/;
