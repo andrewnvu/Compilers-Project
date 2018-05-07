@@ -1,12 +1,14 @@
 %{
 void yyerror(char *s);
+#include <iostream>
+#include <string>
 #include <stdio.h>
 #include <stdlib.h>
-#include "string.h"
+using namespace std;
 int yylex(void);
 %}
 
-%union {int num; char id; string myString;}
+%union {int num; char id; char * myString;}
 %start start
 %token PROGRAM
 %token BEGIN
@@ -14,12 +16,12 @@ int yylex(void);
 %token END.
 %token INTEGER
 %token PRINT
-%type <string> pname print output stat stat_list dec dec_list assign type
+%type <myString> pname print output stat stat_list dec dec_list assign type
 %type <num> id expr term factor number digit;
 %type <id> letter
 %%
 
-start      : PROGRAM pname {strcpy(output_string,$2); open_out_file(output_string); } ';' {print_header();}
+start      : PROGRAM pname {strcpy(output_string,$2); open_out_file(output_string);} ';' {print_header();}
 	   | pname ';'  {yyerror("PROGRAM is expected");} VAR dec_list ';' BEGIN stat_list END.
                ;
 

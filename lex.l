@@ -1,7 +1,7 @@
 %{
 #include <stdio.h>
 #include "string.h"
-#include "y.tab.h"
+#include "yacc.tab.h"
 %}
 
 extern int yylineno = 1;
