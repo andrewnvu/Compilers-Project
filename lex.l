@@ -22,8 +22,8 @@ extern int yylineno = 1;
 
 \(\*[^\*\)]*\*\)	/*ignore comments*/;
 
-[ \t\n]			{yylineno++;}
-
+[\n]			{yylineno++;}
+[ \t]			;
 .			{printf("unexepected character");}
 
 %%
