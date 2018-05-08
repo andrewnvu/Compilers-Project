@@ -1,30 +1,28 @@
 %{
 #include <stdio.h>
-#include "string.h"
-#include "yacc.tab.h"
+#include 'y.tab.h'
+char* p
 %}
 
-extern int yylineno = 1;
 
 %%
 
-
-"PROGRAM"		{return PROGRAM;}
-"VAR"			{return VAR;}
-"BEGIN"			{return BEGINING;}
-"INTEGER"		{return INTEGER;}
-"PRINT"			{return PRINT;}
-"END."			{return END;}
-[a-zA-Z][_a-zA-Z0-9]* 	{return IDENTIFIER;}
-
-[0-9]	{return yytext[0];}
-[-+=\;\*/()\',:]	{return yytext[0];}
-
-\(\*[^\*\)]*\*\)	/*ignore comments*/;
-
-[\n]			{yylineno++;}
-[ \t]			;
-.			{printf("unexepected character");}
+"PROGRAM"								{return (PROGRAM);}
+"VAR"										{return (VAR);}
+"INTEGER"								{return (INTEGER);}
+"BEGIN"									{return (BEGIN);}
+"PRINT"									{return (PRINT);}
+"END."									{return (END);}
+[a-zA-Z][_a-zA-Z0-9]* 	{ p=(char *)calloc(strlen(yytext)+1,sizeof(char));
+                       strcpy(p,yytext);
+                       yylval.id=p;
+                       return(IDENTIFIER);}
+[0-9][0-9]*							{yyval.num = atoi(yytext); return (INT);}
+[-+=\;\*/()\',:]				{return yytext[0];}
+\(\*[^\*\)]*\*\)				/*ignore comments*/;
+[ \t]										;
+[/n]										return yylineno++;
+.												{printf ("unexepected character at line %d\n", yylineno);}
 
 %%
 
