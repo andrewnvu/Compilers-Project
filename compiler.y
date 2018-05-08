@@ -10,32 +10,30 @@ extern int yylex();
 extern int yylineno;
 extern char * yytext;
 
+char symbols1[3][2]; //2d arrays to hold multiple c strings, our identifiers
+char symbols2[3][2]; //
+/*counts in order to keep track of where the 
+	2d is when inserting into the symbols char array*/
 int count1 = 0;
 int count2 = 0;
 int count3 = 0;
 int count4 = 0;
-
-char symbols1[3][2];
-char symbols2[3][2];
-
+/*symbol table stuff*/
 int symbolTable[4];
-void updateSymbolTable(char sym[3], int val);
+void updateSymbolTable(char sym[3], int n);
 void insertSymbol(char * sym);
 int getSymbolValue(char * sym);
 
 %}
 
-/* YACC Def. */
-
 %union {
             int num;
             char * id;
-            char * strings;
         }
 %start start
 
 %token PROGRAM
-%token BEGINING
+%token BEGINNING
 %token END
 %token PRINT
 %token VAR
@@ -46,72 +44,63 @@ int getSymbolValue(char * sym);
 %type <num> number expr factor term
 
 %%
-start        : PROGRAM pname beforeVar {;}
-        | error {printf("Exptected PROGRAM at line %d, but found %s \n", yylineno, yytext); exit(EXIT_FAILURE);}
+start  : PROGRAM pname ';' variable {;}
+       |  error {printf("PROGRAM is expected at line %d, found %s \n", yylineno, yytext); exit(EXIT_FAILURE);}
+       ;
+
+variable     : VAR dec_list ';' begin {;}
+             | error {printf("VAR is expected at line %d, found %s \n", yylineno, yytext); exit(EXIT_FAILURE);}
+             ;
+
+begin   : BEGINNING stat_list end {;}
+        | error {printf("BEGIN is expected at line %d, found %s \n", yylineno, yytext); exit(EXIT_FAILURE);}
         ;
 
-beforeVar    : ';' {;}
-        | ';' variable {;}
-        | error {printf("Expected shit a ; at line %d \n", (yylineno) ); exit(EXIT_FAILURE);}
-    ;
-
-variable     : VAR dec_list beforeBegin {;}
-        | error {printf("Expected VAR at line %d, found %s \n", yylineno, yytext); exit(EXIT_FAILURE);}
-        ;
-
-beforeBegin  : ';' {;}
-    | ';' begin {;}
-    | error {printf("Expected dick a ; at line %d ", (yylineno) ); exit(EXIT_FAILURE);}
-    ;
-
-begin        : BEGINING stat_list end {;}
-        | error {printf("Exptected BEGIN at line %d, but found %s \n", yylineno, yytext); exit(EXIT_FAILURE);}
-        ;
-
-end        : END {exit(EXIT_SUCCESS);}
+end     : END {exit(EXIT_SUCCESS);}
         ;
 
 
-pname        : IDENTIFIER //id {;}
+pname   : IDENTIFIER 
         ;
-
 
 dec_list    : dec ':' type {;}
-    | error{printf("Expected : at line %d\n", yylineno); exit(EXIT_FAILURE);}
-        ;
+    	    | error{printf("Expected : at line %d\n", yylineno); exit(EXIT_FAILURE);}
+            ;
 
 dec     : IDENTIFIER ',' dec {insertSymbol($1);}
 	| IDENTIFIER {insertSymbol($1);}
-        | error{printf("Expected IDENTIFIER at line %d, found %s\n", yylineno, yytext); exit(EXIT_FAILURE);}
+        | error{printf("IDENTIFIER is expected at line %d, found %s\n", yylineno, yytext); exit(EXIT_FAILURE);}
         ;
 
 stat_list    : stat ';' {;}
-        | stat ';' stat_list {;}
-        ;
+       	     | stat ';' stat_list {;}
+             ;
 
-stat    : print    {;}
+stat    : print  {;}
         | assign {;}
         ;
 
-print        : PRINT '(' output ')' {;}
-        | error {printf("Exptected PRINT at line %d, but found %s \n", yylineno, yytext); exit(EXIT_FAILURE);}
+print   : PRINT '(' output ')' {;} 
+
+        | error {printf("PRINT is expected at line %d, found %s \n", yylineno, yytext); exit(EXIT_FAILURE);}
         ;
 
-output        : IDENTIFIER {printf("%d", getSymbolValue($1));} //CHANGE
-        | IDENTIFIER ',' IDENTIFIER {printf("%s %d", $1, getSymbolValue($3));}   //CHANGE
+output  : IDENTIFIER {printf("%d", getSymbolValue($1));} // could be wrong - needs to allow for repetition
+								//because of language <output> {“string”,} <id>
+        | IDENTIFIER ',' IDENTIFIER {printf("%s %d", $1, getSymbolValue($3));} 
         ;
 
-assign        : IDENTIFIER '=' expr {updateSymbolTable($1, $3);}
+assign  : IDENTIFIER '=' expr {updateSymbolTable($1, $3);}
         ;
 
-expr        : term {$$ = $1;}
+expr    : term {$$ = $1;}
         | expr '+' term {$$ = $1 + $3;}
         | expr '-' term {$$ = $1 - $3;}
         ;
 
 term        : term '*' factor {$$ = $1 * $3;}
         | term '/' factor {$$ = $1 / $3;}
-        | factor {;}
+        | factor {$$ = $1;}
         ;
 
 factor        : IDENTIFIER {$$ = getSymbolValue($1);}
@@ -120,15 +109,13 @@ factor        : IDENTIFIER {$$ = getSymbolValue($1);}
         ;
 
 
-number        : INT {$$ = $1;};
+number  : INT {$$ = $1;};
 
-type        : INTEGER
-        | error {printf("Expected INTEGER at line %d, but found %s", yylineno, yytext); exit(EXIT_FAILURE);}
+type    : INTEGER
+        | error {printf("INTEGER is expexted at line %d, found %s", yylineno, yytext); exit(EXIT_FAILURE);}
         ;
 
 %%
-
-#include <stdio.h>
 
 void insertSymbol(char * sym)
 {
@@ -138,20 +125,12 @@ void insertSymbol(char * sym)
         int j = 0;
         for(j; j < 2; j++)
         {
-        /*
-        symbols2[0][0] = sym[0] = a
-        symbols2[0][1] = sym[1] = b
-        symbols2[0][2] = sym[2] = 5
-        */
-        /*
-        symbols2[1][2] = sym[0] = e
-        symbols2[1][3] = sym[1] = b <----Error
-        */
-            symbols2[count3][count4] = sym[j];
+    
+            symbols2[count3][j] = sym[j];
             count4++;
         }
         count3++;
-        //count3 == 1;
+ 
     }
 
 }
@@ -197,7 +176,7 @@ void updateSymbolTable(char * sym, int n)
             int j = 0;
             for(j; j < 2; j++)
             {
-                symbols1[count1][count2] = sym[j];
+                symbols1[count1][j] = sym[j];
                 count2++;
             }
             symbolTable[count1] = n;
@@ -218,6 +197,5 @@ int main()
 
 void yyerror (char *s)
 {
-    fflush(stdout);
     fprintf (stderr, "%s\n", s);
 }
