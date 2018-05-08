@@ -10,7 +10,7 @@ char* p;
 "PROGRAM"								{return (PROGRAM);}
 "VAR"									{return (VAR);}
 "INTEGER"								{return (INTEGER);}
-"BEGIN"									{return (BEGINING);}
+"BEGIN"									{return (BEGINNING);}
 "PRINT"									{return (PRINT);}
 "END."									{return (END);}
 [a-fA-F][a-fA-F0-9]* 							{p=(char *)calloc(strlen(yytext)+1,sizeof(char));
